@@ -20,6 +20,11 @@ const dataabout = {
     aboutme: "I'm a Data Scientist and Machine Learning Engineer with a strong foundation in both engineering and computer science. Currently pursuing my MSc. in Computer Science at Boston University, I bring a unique perspective combining mechanical engineering principles with advanced data science techniques. My experience spans from optimizing transformer-based forecasting models at Schneider Electric to conducting cutting-edge research in human-machine interaction at BU's Human-2-Everything Lab. I'm passionate about building scalable ML systems, conducting rigorous data analysis, and translating complex technical insights into business value. With expertise in Python, PySpark, TensorFlow, and cloud platforms, I thrive on solving challenging problems at the intersection of data, machine learning, and real-world applications.",
 };
 const worktimeline = [{
+        jobtitle: "Research Scientist",
+        where: "Boston University",
+        date: "Aug 2026 - Present",
+    },
+    {
         jobtitle: "Research Assistant",
         where: "Human-2-Everything Lab BU",
         date: "Jan 2025 - Present",
@@ -41,45 +46,53 @@ const worktimeline = [{
     },
 ];
 
-const skills = [{
-        name: "Python",
-        value: 95,
+const skillsCategories = [
+    {
+        category: "Programming Languages",
+        items: ["Python", "R", "MATLAB", "SQL", "Java"],
     },
     {
-        name: "PySpark",
-        value: 85,
+        category: "ML/DL",
+        items: [
+            "Pandas",
+            "NumPy",
+            "Matplotlib",
+            "PySpark",
+            "PyTorch",
+            "TensorFlow",
+            "Hugging Face",
+            "MLflow",
+            "Distributed Training",
+            "Model Evaluation",
+            "OpenCV",
+        ],
     },
     {
-        name: "TensorFlow",
-        value: 85,
+        category: "LLM & GenAI",
+        items: [
+            "LangChain",
+            "vLLM",
+            "LangGraph",
+            "Ollama",
+            "Claude Code",
+            "Cursor",
+            "Prompt Engineering",
+        ],
     },
     {
-        name: "SQL",
-        value: 90,
-    },
-    {
-        name: "R",
-        value: 80,
-    },
-    {
-        name: "MATLAB",
-        value: 85,
-    },
-    {
-        name: "Java",
-        value: 75,
-    },
-    {
-        name: "Databricks",
-        value: 85,
-    },
-    {
-        name: "AWS",
-        value: 80,
-    },
-    {
-        name: "Machine Learning",
-        value: 90,
+        category: "Data & MLOps",
+        items: [
+            "AWS",
+            "GCP",
+            "Git",
+            "Kubernetes",
+            "FastAPI",
+            "REST API",
+            "Streamlit",
+            "Databricks",
+            "PowerBI",
+            "Tableau",
+        ],
     },
 ];
 
@@ -205,7 +218,7 @@ export {
     dataabout,
     dataportfolio,
     worktimeline,
-    skills,
+    skillsCategories,
     services,
     introdata,
     contactConfig,

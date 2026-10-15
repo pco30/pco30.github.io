@@ -16,50 +16,26 @@
     border-color: var(--text-color) !important;
 }
 
-.progress-title {
-    font-size: 16px;
+.skills-categories {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.skill-category-title {
+    font-family: Marcellus;
+    font-size: 1.15rem;
     font-weight: 700;
-    margin: 15px 0 20px;
-    font-family: 'Raleway';
-}
-
-.progress {
-    height: 5px;
-    background: var(--secondary);
-    border-radius: 0;
-    box-shadow: none;
-    margin-bottom: 30px;
-    overflow: visible;
-}
-
-.progress .progress-bar {
-    position: relative;
-    background: var(--text-color);
-    animation: animate-positive 2s;
-    overflow: visible;
-    opacity: 0.9;
-}
-
-.progress .progress-value {
-    position: absolute;
-    top: -30px;
-    right: 8px;
-    font-size: 17px;
-    font-weight: bold;
-    font-style: italic;
     color: var(--text-color);
+    margin: 0 0 0.35rem;
 }
 
-@-webkit-keyframes animate-positive {
-    0% {
-        width: 0%;
-    }
-}
-
-@keyframes animate-positive {
-    0% {
-        width: 0%;
-    }
+.skill-category-items {
+    color: var(--text-color);
+    font-size: 1rem;
+    line-height: 1.7;
+    margin: 0;
+    opacity: 0.92;
 }
 
 .section-title {
