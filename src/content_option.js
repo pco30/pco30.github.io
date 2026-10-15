@@ -12,7 +12,7 @@ const introdata = {
         third: "I solve complex problems",
     },
     description: "Data Scientist and ML Engineer passionate about transforming data into actionable insights. Currently pursuing MSc. Computer Science at Boston University with expertise in predictive modeling, time series forecasting, and scalable machine learning systems.",
-    your_img_url: require("./assets/images/IMG_0765.jpg"),
+    your_img_url: require("./assets/images/home-portrait.jpg"),
 };
 
 const dataabout = {
