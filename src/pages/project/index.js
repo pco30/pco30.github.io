@@ -372,6 +372,9 @@ export const ProjectDetail = () => {
   const isBookRecommender = project.link === "/portfolio/neural-sequential-recommender-book-discovery";
   const isBatteryDegradation = project.link === "/portfolio/predictive-modelling-battery-degradation";
   const isTextProcessing = project.link === "/portfolio/large-scale-text-processing-classification";
+  const isSelfAvatarNerf = project.link === "/portfolio/self-avatar-using-nerf";
+  const isSelfRefiningAgent = project.link === "/portfolio/self-refining-llm-agent";
+  const isWinChangeMonitor = project.link === "/portfolio/winchangemonitor";
 
   return (
     <HelmetProvider>
@@ -2441,6 +2444,575 @@ export const ProjectDetail = () => {
                       <li>JSON</li>
                       <li>CSV</li>
                       <li>Text Files</li>
+                    </ul>
+                  </div>
+                </div>
+              </Col>
+            </Row>
+          </>
+        ) : isSelfAvatarNerf ? (
+          <>
+            <Row className="sec_sp">
+              <Col lg="12">
+                <div className="project-image-container mb-4">
+                  <img src={project.img} alt="Self Avatar using NeRF" className="project-image" style={{ maxWidth: '800px', width: '100%', height: 'auto', margin: '0 auto', display: 'block' }} />
+                </div>
+              </Col>
+            </Row>
+
+            <Row className="sec_sp">
+              <Col lg="12">
+                <h2 id="overview" className="section-title">Overview</h2>
+                <div className="project-description">
+                  <p>
+                    This project reconstructs a personal 3D avatar from multi-view images using an existing Neural Radiance Field (NeRF)
+                    framework, then exports the result as a standard mesh for visualization in Blender. Rather than training a NeRF
+                    architecture from scratch, the pipeline orchestrates <strong>Nerfstudio</strong> tooling end-to-end: data preparation,
+                    training, Poisson mesh export, and Blender import.
+                  </p>
+                  <p>
+                    The system is configured through a YAML project config and scripted so the same workflow can run locally or on a GPU
+                    environment such as Google Colab. Recommended capture uses <strong>80–200 images</strong> with full 360° coverage,
+                    stable lighting, and a still subject. The trained model and exported mesh are written under dedicated output directories
+                    for reuse and rendering.
+                  </p>
+                </div>
+              </Col>
+            </Row>
+
+            <Row className="sec_sp">
+              <Col lg="12">
+                <h2 id="problem" className="section-title">Problem/Challenge</h2>
+                <div className="project-description">
+                  <p>
+                    <strong>Application Challenge:</strong> Creating a high-quality personal 3D avatar traditionally requires specialized
+                    scanning hardware, manual mesh cleanup, or artist-driven modeling. A practical software pipeline should turn ordinary
+                    multi-view photos into a usable 3D asset that can be opened in standard tools like Blender.
+                  </p>
+                  <p>
+                    <strong>Technical Challenges:</strong>
+                  </p>
+                  <ul className="project-list">
+                    <li>Capturing sufficient multi-view coverage so geometry and appearance reconstruct cleanly</li>
+                    <li>Integrating COLMAP-based pose estimation with Nerfstudio training and export</li>
+                    <li>Choosing reconstruction and export settings that balance detail against mesh complexity</li>
+                    <li>Making the workflow reproducible across local machines and Colab GPU runtimes</li>
+                  </ul>
+                  <p>
+                    The goal was to assemble a reliable capture-to-mesh pipeline that produces a Blender-ready avatar without reinventing
+                    NeRF training internals.
+                  </p>
+                </div>
+              </Col>
+            </Row>
+
+            <Row className="sec_sp">
+              <Col lg="12">
+                <h2 id="pipeline" className="section-title">Model Pipeline</h2>
+
+                <div className="mermaid-container">
+                  <div className="mermaid" ref={mermaidCallbackRef}>
+                    {`graph TD
+    A["Multi-view Capture<br/>(Images / Video)"] --> B["Optional Frame Extraction<br/>(ffmpeg)"]
+    B --> C["Data Processing<br/>(ns-process-data / COLMAP)"]
+    C --> D["NeRF Training<br/>(ns-train nerfacto)"]
+    D --> E["Find Latest Config<br/>(config.yml)"]
+    E --> F["Mesh Export<br/>(ns-export poisson)"]
+    F --> G["OBJ + Materials"]
+    G --> H["Blender Import<br/>(Visualization)"]
+
+    style A fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style B fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style C fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style D fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style E fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style F fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style G fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style H fill:#fff,stroke:#000,stroke-width:2px,color:#000`}
+                  </div>
+                </div>
+
+                <div className="pipeline-descriptions">
+                  <div className="pipeline-description-item">
+                    <h4>1. Multi-view Capture</h4>
+                    <p>Capture a dense set of still images (or a video) around the subject. Recommended practice is 80–200 frames with full 360° coverage, consistent lighting, and minimal subject motion so camera poses and radiance fields converge reliably.</p>
+                  </div>
+
+                  <div className="pipeline-description-item">
+                    <h4>2. Optional Frame Extraction</h4>
+                    <p>When starting from video, extract frames with ffmpeg at a controlled FPS (default 3) into the image directory. This converts continuous footage into a multi-view image set suitable for reconstruction.</p>
+                  </div>
+
+                  <div className="pipeline-description-item">
+                    <h4>3. Data Processing</h4>
+                    <p>Run Nerfstudio data processing (`ns-process-data`) so COLMAP estimates camera poses and prepares a NeRF-ready dataset. On the local orchestration path, images are pointed to the configured data directory; the Colab script makes this step explicit.</p>
+                  </div>
+
+                  <div className="pipeline-description-item">
+                    <h4>4. NeRF Training</h4>
+                    <p>Train with `ns-train nerfacto` using project settings from `configs/project.yaml`. Default training runs for 30,000 iterations and writes checkpoints and run metadata under `outputs/nerf_model/`.</p>
+                  </div>
+
+                  <div className="pipeline-description-item">
+                    <h4>5. Mesh Export</h4>
+                    <p>Locate the latest Nerfstudio `config.yml`, then export a surface mesh with `ns-export poisson`. Export parameters target approximately 50,000 faces with Poisson depth 9, producing a standard `.obj` plus materials for downstream use.</p>
+                  </div>
+
+                  <div className="pipeline-description-item">
+                    <h4>6. Blender Visualization</h4>
+                    <p>Import the exported OBJ into Blender (via CLI or a small Blender Python helper) to inspect geometry, materials, and presentation quality of the reconstructed avatar.</p>
+                  </div>
+                </div>
+              </Col>
+            </Row>
+
+            <Row className="sec_sp">
+              <Col lg="12">
+                <h2 id="results" className="section-title">Results</h2>
+                <div className="project-description">
+                  <div className="results-grid">
+                    <div className="result-card">
+                      <h4>Reconstruction Method</h4>
+                      <p className="result-value">nerfacto</p>
+                      <p>Nerfstudio NeRF method</p>
+                    </div>
+                    <div className="result-card">
+                      <h4>Training Budget</h4>
+                      <p className="result-value">30k iters</p>
+                      <p>Configurable in YAML</p>
+                    </div>
+                    <div className="result-card">
+                      <h4>Mesh Target</h4>
+                      <p className="result-value">~50k faces</p>
+                      <p>Poisson export setting</p>
+                    </div>
+                    <div className="result-card">
+                      <h4>Deliverable</h4>
+                      <p className="result-value">.obj mesh</p>
+                      <p>Blender-ready avatar</p>
+                    </div>
+                  </div>
+                  <p>
+                    The pipeline successfully produces a trained NeRF run and an exported mesh asset that can be opened directly in Blender.
+                    Supporting scripts also enable Colab GPU execution and zip packaging of mesh outputs for easy download and sharing.
+                    Source repository: <a href="https://github.com/pco30/3D-avatar" target="_blank" rel="noopener noreferrer">github.com/pco30/3D-avatar</a>.
+                  </p>
+                </div>
+              </Col>
+            </Row>
+
+            <Row className="sec_sp">
+              <Col lg="12">
+                <h2 id="technologies" className="section-title">Technologies Used</h2>
+                <div className="technologies-grid">
+                  <div className="tech-category">
+                    <h4>3D / NeRF</h4>
+                    <ul className="tech-list">
+                      <li>Nerfstudio</li>
+                      <li>nerfacto</li>
+                      <li>ns-train / ns-export</li>
+                      <li>Poisson Surface Reconstruction</li>
+                    </ul>
+                  </div>
+                  <div className="tech-category">
+                    <h4>Geometry & Capture</h4>
+                    <ul className="tech-list">
+                      <li>COLMAP</li>
+                      <li>Multi-view Imaging</li>
+                      <li>ffmpeg</li>
+                      <li>OBJ Mesh Export</li>
+                    </ul>
+                  </div>
+                  <div className="tech-category">
+                    <h4>Visualization</h4>
+                    <ul className="tech-list">
+                      <li>Blender</li>
+                      <li>Blender Python API</li>
+                    </ul>
+                  </div>
+                  <div className="tech-category">
+                    <h4>Orchestration</h4>
+                    <ul className="tech-list">
+                      <li>Python 3.10+</li>
+                      <li>PyYAML</li>
+                      <li>Typer</li>
+                      <li>Google Colab (GPU path)</li>
+                    </ul>
+                  </div>
+                </div>
+              </Col>
+            </Row>
+          </>
+        ) : isSelfRefiningAgent ? (
+          <>
+            <Row className="sec_sp">
+              <Col lg="12">
+                <div className="project-image-container mb-4">
+                  <img src={project.img} alt="Self-refining LLM Agent" className="project-image" style={{ maxWidth: '800px', width: '100%', height: 'auto', margin: '0 auto', display: 'block' }} />
+                </div>
+              </Col>
+            </Row>
+
+            <Row className="sec_sp">
+              <Col lg="12">
+                <h2 id="overview" className="section-title">Overview</h2>
+                <div className="project-description">
+                  <p>
+                    This project implements a <strong>local, web-grounded question-answering agent</strong> built with LangGraph and Ollama.
+                    Given a user question, the agent plans search queries, retrieves and extracts web sources, drafts a cited answer,
+                    critiques that draft, and iteratively revises until quality is acceptable or a revision limit is reached.
+                  </p>
+                  <p>
+                    All LLM calls run through a local Ollama model (default <strong>llama3.2:3b</strong>), so the workflow does not depend on
+                    cloud LLM APIs. Web retrieval uses DuckDuckGo search plus page fetching with httpx and BeautifulSoup, with search-snippet
+                    fallback when extraction fails.
+                  </p>
+                </div>
+              </Col>
+            </Row>
+
+            <Row className="sec_sp">
+              <Col lg="12">
+                <h2 id="problem" className="section-title">Problem/Challenge</h2>
+                <div className="project-description">
+                  <p>
+                    <strong>Research Challenge:</strong> Single-pass LLM answers often hallucinate, omit citations, or stop short of
+                    verifying claims against external evidence. Users need an agent that actively gathers sources and improves its own draft
+                    before returning a final answer.
+                  </p>
+                  <p>
+                    <strong>Technical Challenges:</strong>
+                  </p>
+                  <ul className="project-list">
+                    <li>Turning a free-form question into high-yield web search queries</li>
+                    <li>Grounding answers strictly in retrieved sources with inline citations</li>
+                    <li>Evaluating draft quality automatically and deciding when revision is needed</li>
+                    <li>Running the full loop locally with Ollama while remaining resilient to failed page fetches</li>
+                  </ul>
+                  <p>
+                    The goal was to build a transparent agentic QA loop that prefers grounded, cited answers over one-shot generation.
+                  </p>
+                </div>
+              </Col>
+            </Row>
+
+            <Row className="sec_sp">
+              <Col lg="12">
+                <h2 id="pipeline" className="section-title">Model Pipeline</h2>
+
+                <div className="mermaid-container">
+                  <div className="mermaid" ref={mermaidCallbackRef}>
+                    {`graph TD
+    A["User Question"] --> B["Planner<br/>(Search Queries JSON)"]
+    B --> C["Web Search<br/>(DuckDuckGo)"]
+    C --> D["Fetch + Extract<br/>(httpx / BeautifulSoup)"]
+    D --> E["Synthesizer<br/>(Cited Draft)"]
+    E --> F["Critic<br/>(Score 0-10)"]
+    F --> G{"Needs Revision<br/>and under max?"}
+    G -->|Yes| H["Reviser<br/>(Fix Issues)"]
+    H --> F
+    G -->|No| I["Finalize Answer"]
+
+    style A fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style B fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style C fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style D fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style E fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style F fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style G fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style H fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style I fill:#fff,stroke:#000,stroke-width:2px,color:#000`}
+                  </div>
+                </div>
+
+                <div className="pipeline-descriptions">
+                  <div className="pipeline-description-item">
+                    <h4>1. Planner</h4>
+                    <p>An LLM research planner proposes 3–6 web queries plus must-have facts and pitfalls to avoid. Output is parsed as JSON with fallbacks when the model wraps JSON in prose. Queries are capped at six.</p>
+                  </div>
+
+                  <div className="pipeline-description-item">
+                    <h4>2. Search & Extraction</h4>
+                    <p>Each query is searched via DuckDuckGo. Candidate URLs are fetched and cleaned (scripts/styles/nav removed), truncated to readable excerpts, and de-duplicated. Up to 10 sources are retained for synthesis. If a page fetch fails, the search snippet is used as fallback context.</p>
+                  </div>
+
+                  <div className="pipeline-description-item">
+                    <h4>3. Synthesizer</h4>
+                    <p>Using only retrieved sources, the synthesizer writes a concise answer with `[n]` citations. It is instructed to note conflicts, avoid unsupported claims, and call out missing evidence when sources are insufficient.</p>
+                  </div>
+
+                  <div className="pipeline-description-item">
+                    <h4>4. Critic</h4>
+                    <p>A critic scores the draft 0–10 on groundedness, completeness, clarity, citation quality, and hallucination risk. It returns structured issues/fixes and a `needs_revision` flag (defaulting to true when score &lt; 8).</p>
+                  </div>
+
+                  <div className="pipeline-description-item">
+                    <h4>5. Reviser's Loop</h4>
+                    <p>If revision is needed and the revision count is below `--max-revisions` (default 2), a reviser rewrites the draft to address critic issues using only the sources. The updated draft returns to the critic until exit criteria are met, then finalize emits the final answer.</p>
+                  </div>
+                </div>
+              </Col>
+            </Row>
+
+            <Row className="sec_sp">
+              <Col lg="12">
+                <h2 id="results" className="section-title">Results</h2>
+                <div className="project-description">
+                  <div className="results-grid">
+                    <div className="result-card">
+                      <h4>Agent Framework</h4>
+                      <p className="result-value">LangGraph</p>
+                      <p>Stateful multi-node graph</p>
+                    </div>
+                    <div className="result-card">
+                      <h4>Default Model</h4>
+                      <p className="result-value">llama3.2:3b</p>
+                      <p>Local via Ollama</p>
+                    </div>
+                    <div className="result-card">
+                      <h4>Revision Cap</h4>
+                      <p className="result-value">2 loops</p>
+                      <p>Configurable CLI flag</p>
+                    </div>
+                    <div className="result-card">
+                      <h4>Source Cap</h4>
+                      <p className="result-value">10 pages</p>
+                      <p>De-duplicated web evidence</p>
+                    </div>
+                  </div>
+                  <p>
+                    The agent produces cited answers that improve through an explicit critique-and-revision loop rather than a single generation
+                    pass. Because inference stays local, the design supports privacy-sensitive research workflows while still grounding claims
+                    in live web evidence. Source repository: <a href="https://github.com/pco30/Self-refining_LLM_Agent" target="_blank" rel="noopener noreferrer">github.com/pco30/Self-refining_LLM_Agent</a>.
+                  </p>
+                </div>
+              </Col>
+            </Row>
+
+            <Row className="sec_sp">
+              <Col lg="12">
+                <h2 id="technologies" className="section-title">Technologies Used</h2>
+                <div className="technologies-grid">
+                  <div className="tech-category">
+                    <h4>Agent Stack</h4>
+                    <ul className="tech-list">
+                      <li>LangGraph</li>
+                      <li>LangChain</li>
+                      <li>langchain-ollama</li>
+                      <li>Ollama</li>
+                    </ul>
+                  </div>
+                  <div className="tech-category">
+                    <h4>Retrieval</h4>
+                    <ul className="tech-list">
+                      <li>DuckDuckGo Search</li>
+                      <li>httpx</li>
+                      <li>BeautifulSoup</li>
+                      <li>lxml</li>
+                    </ul>
+                  </div>
+                  <div className="tech-category">
+                    <h4>LLM Behavior</h4>
+                    <ul className="tech-list">
+                      <li>Planner / Critic / Reviser Prompts</li>
+                      <li>Citation-grounded Synthesis</li>
+                      <li>JSON Response Parsing</li>
+                      <li>Iterative Self-refinement</li>
+                    </ul>
+                  </div>
+                  <div className="tech-category">
+                    <h4>Runtime</h4>
+                    <ul className="tech-list">
+                      <li>Python 3.10+</li>
+                      <li>CLI Interface</li>
+                      <li>Local Inference</li>
+                    </ul>
+                  </div>
+                </div>
+              </Col>
+            </Row>
+          </>
+        ) : isWinChangeMonitor ? (
+          <>
+            <Row className="sec_sp">
+              <Col lg="12">
+                <div className="project-image-container mb-4">
+                  <img src={project.img} alt="WinChangeMonitor" className="project-image" style={{ maxWidth: '800px', width: '100%', height: 'auto', margin: '0 auto', display: 'block' }} />
+                </div>
+              </Col>
+            </Row>
+
+            <Row className="sec_sp">
+              <Col lg="12">
+                <h2 id="overview" className="section-title">Overview</h2>
+                <div className="project-description">
+                  <p>
+                    <strong>WinChangeMonitor</strong> is a Windows desktop application that helps users understand what a third-party
+                    executable or script changes on a machine. It captures a baseline inventory, lets the user run the target program,
+                    captures a post-execution inventory, and generates a diff report of <strong>added / modified / deleted</strong> changes.
+                  </p>
+                  <p>
+                    The tool monitors configurable domains — <strong>filesystem</strong>, <strong>Windows Registry</strong>, and
+                    <strong> Windows Services</strong> — and exports human-readable HTML reports plus structured JSON. It was developed as a
+                    software engineering course product (MET CS 673) with companion documentation, installer packaging, and a TestFramework
+                    that simulates installer-like system changes for demos and validation.
+                  </p>
+                </div>
+              </Col>
+            </Row>
+
+            <Row className="sec_sp">
+              <Col lg="12">
+                <h2 id="problem" className="section-title">Problem/Challenge</h2>
+                <div className="project-description">
+                  <p>
+                    <strong>Security / Ops Challenge:</strong> Developers, administrators, and security-minded users often need to run
+                    unverified, legacy, closed-source, or “mystery” software. Without transparent change detection, it is difficult to know
+                    which files, registry values, or services were created, altered, or removed.
+                  </p>
+                  <p>
+                    <strong>Technical Challenges:</strong>
+                  </p>
+                  <ul className="project-list">
+                    <li>Inventories that can span large folder trees, nested registry keys, and service configurations</li>
+                    <li>Persisting large baseline inventories efficiently between pre- and post-scans</li>
+                    <li>Diffing three heterogeneous domains into a single actionable report</li>
+                    <li>Providing a usable WinForms UI, installer, and reproducible demo harness</li>
+                  </ul>
+                  <p>
+                    The goal was to deliver a repeatable baseline → execute → post-scan → report workflow for transparent Windows change analysis.
+                  </p>
+                </div>
+              </Col>
+            </Row>
+
+            <Row className="sec_sp">
+              <Col lg="12">
+                <h2 id="pipeline" className="section-title">Model Pipeline</h2>
+
+                <div className="mermaid-container">
+                  <div className="mermaid" ref={mermaidCallbackRef}>
+                    {`graph TD
+    A["Configure Monitors<br/>(File / Registry / Services)"] --> B["Select Targets<br/>(Folders / Keys / Services)"]
+    B --> C["Pre-Install Inventory<br/>(Baseline Scan)"]
+    C --> D["Persist Inventory<br/>(MessagePack .bin)"]
+    D --> E["Run Third-party Software"]
+    E --> F["Post-Install Inventory<br/>(Second Scan)"]
+    F --> G["Difference Analysis<br/>(Added / Modified / Deleted)"]
+    G --> H["HTML Report + JSON Export"]
+
+    style A fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style B fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style C fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style D fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style E fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style F fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style G fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style H fill:#fff,stroke:#000,stroke-width:2px,color:#000`}
+                  </div>
+                </div>
+
+                <div className="pipeline-descriptions">
+                  <div className="pipeline-description-item">
+                    <h4>1. Configure Monitors</h4>
+                    <p>Enable any combination of File System, Registry, and Services monitors from the main WinForms UI. Each monitor can be toggled independently so scans stay focused on the domains of interest.</p>
+                  </div>
+
+                  <div className="pipeline-description-item">
+                    <h4>2. Select Targets</h4>
+                    <p>Add folders and registry keys to track, optionally including subfolders/subkeys. Services monitoring captures service configuration state. Some registry/service operations may require Administrator privileges.</p>
+                  </div>
+
+                  <div className="pipeline-description-item">
+                    <h4>3. Pre-Install Inventory</h4>
+                    <p>Perform a baseline scan that recursively inventories selected filesystem paths, registry trees, and services. Work runs on background workers so the UI remains responsive during long scans.</p>
+                  </div>
+
+                  <div className="pipeline-description-item">
+                    <h4>4. Persist Baseline</h4>
+                    <p>Serialize inventories and tracked settings with MessagePack into local `.bin` files beside the executable. On relaunch, retained settings and inventories can be reloaded with splash-screen progress feedback.</p>
+                  </div>
+
+                  <div className="pipeline-description-item">
+                    <h4>5. Post-Install Diff & Reporting</h4>
+                    <p>After the target program runs, a second inventory is captured and compared against the baseline. Changes are bucketed as added, modified, or deleted per domain, then exported as an HTML report and optional JSON for further analysis. A companion TestFramework executable can simulate installer-like changes for demos and testing.</p>
+                  </div>
+                </div>
+              </Col>
+            </Row>
+
+            <Row className="sec_sp">
+              <Col lg="12">
+                <h2 id="results" className="section-title">Results</h2>
+                <div className="project-description">
+                  <div className="results-grid">
+                    <div className="result-card">
+                      <h4>Monitored Domains</h4>
+                      <p className="result-value">3</p>
+                      <p>Files, Registry, Services</p>
+                    </div>
+                    <div className="result-card">
+                      <h4>Change Types</h4>
+                      <p className="result-value">Add / Mod / Del</p>
+                      <p>Per monitored section</p>
+                    </div>
+                    <div className="result-card">
+                      <h4>Report Formats</h4>
+                      <p className="result-value">HTML + JSON</p>
+                      <p>Human + machine readable</p>
+                    </div>
+                    <div className="result-card">
+                      <h4>Platform</h4>
+                      <p className="result-value">WinForms</p>
+                      <p>.NET Framework 4.8</p>
+                    </div>
+                  </div>
+                  <p>
+                    WinChangeMonitor delivers a complete product surface: desktop UI, persistent inventories, installer packaging, visual user
+                    guide, and a TestFramework demo harness. Course artifacts (proposal, SRS, SDD, SCMP/SPMP) document the engineering process
+                    behind the tool. Source repository: <a href="https://github.com/pco30/WinChangeMonitor" target="_blank" rel="noopener noreferrer">github.com/pco30/WinChangeMonitor</a>.
+                  </p>
+                </div>
+              </Col>
+            </Row>
+
+            <Row className="sec_sp">
+              <Col lg="12">
+                <h2 id="technologies" className="section-title">Technologies Used</h2>
+                <div className="technologies-grid">
+                  <div className="tech-category">
+                    <h4>Application</h4>
+                    <ul className="tech-list">
+                      <li>C# / WinForms</li>
+                      <li>.NET Framework 4.8</li>
+                      <li>Visual Studio</li>
+                      <li>Windows Installer Package</li>
+                    </ul>
+                  </div>
+                  <div className="tech-category">
+                    <h4>Windows APIs</h4>
+                    <ul className="tech-list">
+                      <li>Filesystem Enumeration</li>
+                      <li>Microsoft.Win32 Registry</li>
+                      <li>ServiceController</li>
+                      <li>BackgroundWorker</li>
+                    </ul>
+                  </div>
+                  <div className="tech-category">
+                    <h4>Persistence & Export</h4>
+                    <ul className="tech-list">
+                      <li>MessagePack</li>
+                      <li>System.Text.Json</li>
+                      <li>HTML Report Generation</li>
+                    </ul>
+                  </div>
+                  <div className="tech-category">
+                    <h4>UI Components</h4>
+                    <ul className="tech-list">
+                      <li>ObjectListView</li>
+                      <li>WinFormsToggleSwitch</li>
+                      <li>Custom Registry Browser</li>
+                      <li>HTML Preview Form</li>
                     </ul>
                   </div>
                 </div>

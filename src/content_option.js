@@ -98,6 +98,24 @@ const services = [{
 ];
 
 const dataportfolio = [    {
+        name: "Self Avatar using NeRF",
+        img: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400&h=400&fit=crop",
+        description: "Self Avatar using NeRF - Built an end-to-end Nerfstudio pipeline that reconstructs a personal 3D avatar from multi-view images and exports a Blender-ready mesh via Poisson surface reconstruction.",
+        link: "/portfolio/self-avatar-using-nerf",
+    },
+    {
+        name: "Self-refining LLM Agent",
+        img: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=400&fit=crop",
+        description: "Self-refining LLM Agent - Built a local LangGraph + Ollama research agent that plans web searches, cites sources, and iteratively critiques and revises answers until quality thresholds are met.",
+        link: "/portfolio/self-refining-llm-agent",
+    },
+    {
+        name: "WinChangeMonitor",
+        img: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=400&h=400&fit=crop",
+        description: "WinChangeMonitor - Designed a Windows desktop tool that baselines filesystem, registry, and services, then diffs post-execution changes into HTML/JSON reports for analyzing third-party software.",
+        link: "/portfolio/winchangemonitor",
+    },
+    {
         name: "Predictive Modelling of Battery Degradation",
         img: require("./assets/images/batter.jpg"),
         description: "Predictive Modelling of Battery Degradation - Developed a data-driven SoH estimation framework for lithium-ion batteries using deep learning sequence models and tree-based ensemble regressors, achieving RMSE of 0.295.",
