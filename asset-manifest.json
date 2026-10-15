@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/static/css/main.6b7838d4.css",
-    "main.js": "/static/js/main.d34d3179.js",
+    "main.js": "/static/js/main.7a02dc14.js",
     "static/media/IMG_he.PNG": "/static/media/IMG_he.1d03f34d668321eeaa85.PNG",
     "static/media/portfolio.jpg": "/static/media/portfolio.34b4de00183c8f50add8.jpg",
     "static/media/books.jpg": "/static/media/books.3e714cb0d17ae868f728.jpg",
     "static/media/batter.jpg": "/static/media/batter.77a8326b538746ba40fc.jpg",
-    "static/media/IMG_0765.jpg": "/static/media/IMG_0765.f2a7f702a06e5694a9d9.jpg",
     "static/media/ER.jpeg": "/static/media/ER.79141b057235f0797054.jpeg",
     "static/media/early-life.png": "/static/media/early-life.b1322e23323390556509.png",
     "static/media/soh.png": "/static/media/soh.0bcc6722de3144b47cdc.png",
     "static/media/sentiment.png": "/static/media/sentiment.c11bc31a38f7d58f7f0a.png",
     "static/media/diabetic-retinopathy-stages.jpg": "/static/media/diabetic-retinopathy-stages.40973de831b24507c6d9.jpg",
+    "static/media/home-portrait.jpg": "/static/media/home-portrait.63c462761179b8bfd098.jpg",
     "static/media/badge.png": "/static/media/badge.454cacb3f39cb4b90ecc.png",
     "index.html": "/index.html"
   },
   "entrypoints": [
     "static/css/main.6b7838d4.css",
-    "static/js/main.d34d3179.js"
+    "static/js/main.7a02dc14.js"
   ]
 }
