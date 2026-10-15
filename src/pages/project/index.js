@@ -2455,13 +2455,25 @@ export const ProjectDetail = () => {
           <>
             <Row className="sec_sp">
               <Col lg="12">
+                <div className="project-image-container mb-4">
+                  <img
+                    src={project.img}
+                    alt="Hand X-ray for osteoarthritis severity classification"
+                    className="project-image"
+                    style={{ maxWidth: '480px', width: '100%', height: 'auto', margin: '0 auto', display: 'block' }}
+                  />
+                </div>
+              </Col>
+            </Row>
+
+            <Row className="sec_sp">
+              <Col lg="12">
                 <h2 id="overview" className="section-title">Overview</h2>
                 <div className="project-description">
                   <p>
-                    This project is part of <strong>BU MET CS 790 — Computer Vision in AI</strong> and focuses on
-                    <strong> hand osteoarthritis (HOA) severity classification</strong> from finger-joint X-ray region-of-interest (ROI) images.
-                    The work builds a reproducible data foundation for Project Track 2: cleaning clinical labels, analyzing class imbalance,
-                    and freezing patient-level train/validation/test manifests for downstream deep learning.
+                    This project focuses on <strong>hand osteoarthritis (HOA) severity classification</strong> from finger-joint X-ray
+                    region-of-interest (ROI) images. It builds a reproducible data foundation by cleaning clinical labels, analyzing class
+                    imbalance, and freezing patient-level train/validation/test manifests for downstream deep learning.
                   </p>
                   <p>
                     The pipeline targets visit <strong>V00</strong> and <strong>12 ROI joints</strong> (DIP2–5, PIP2–5, MCP2–5), with labels for
@@ -2489,7 +2501,7 @@ export const ProjectDetail = () => {
                     <li>Severe KL class imbalance that directly affects model strategy and evaluation</li>
                     <li>Preventing patient leakage by splitting at the patient/group level rather than by individual joint images</li>
                     <li>Aligning clinical CSV labels with available ROI image files across 12 joints</li>
-                    <li>Producing frozen, versioned manifests suitable for SCC training and fair baseline vs multitask comparisons</li>
+                    <li>Producing frozen, versioned manifests suitable for training and fair baseline vs multitask comparisons</li>
                   </ul>
                   <p>
                     The goal was to establish a validated, reproducible dataset package before model training: statistical EDA, patient-stratified
@@ -2518,7 +2530,7 @@ export const ProjectDetail = () => {
     G --> J["Validation<br/>(no patient overlap)"]
     H --> J
     I --> J
-    J --> K["Downstream CV Training<br/>(SCC)"]
+    J --> K["Downstream CV Training"]
 
     style A fill:#fff,stroke:#000,stroke-width:2px,color:#000
     style B fill:#fff,stroke:#000,stroke-width:2px,color:#000
@@ -2556,8 +2568,8 @@ export const ProjectDetail = () => {
                   </div>
 
                   <div className="pipeline-description-item">
-                    <h4>5. SCC-Ready Training Path</h4>
-                    <p>Shell examples run the builder/validator on BU’s Shared Computing Cluster with the course conda environment, writing manifests under a shared project space for subsequent computer-vision model training.</p>
+                    <h4>5. Training-Ready Packaging</h4>
+                    <p>Shell examples run the builder and validator end-to-end, writing manifests to a shared project space so computer-vision model training can start from a frozen, validated dataset package.</p>
                   </div>
                 </div>
               </Col>
@@ -2591,8 +2603,7 @@ export const ProjectDetail = () => {
                   </div>
                   <p>
                     The repository delivers cleaned joint-level datasets, exploratory analysis notebooks, and a validated manifest builder that
-                    freezes leakage-safe splits for HOA severity modeling. Team collaboration includes statistical analysis leadership and
-                    SCC-oriented packaging for shared training. Source repository: <a href="https://github.com/nr8283/CS790-Term-Project-2026" target="_blank" rel="noopener noreferrer">github.com/nr8283/CS790-Term-Project-2026</a>.
+                    freezes leakage-safe splits for HOA severity modeling. Source repository: <a href="https://github.com/nr8283/CS790-Term-Project-2026" target="_blank" rel="noopener noreferrer">github.com/nr8283/CS790-Term-Project-2026</a>.
                   </p>
                 </div>
               </Col>
@@ -2632,8 +2643,8 @@ export const ProjectDetail = () => {
                   <div className="tech-category">
                     <h4>Compute</h4>
                     <ul className="tech-list">
-                      <li>BU SCC</li>
-                      <li>Conda / PyTorch course env</li>
+                      <li>HPC / cluster workflows</li>
+                      <li>Conda / PyTorch</li>
                       <li>Bash orchestration</li>
                     </ul>
                   </div>
