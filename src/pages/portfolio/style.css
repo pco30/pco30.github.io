@@ -1,21 +1,21 @@
 .po_items_ho {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-    gap: 1.4rem;
+    gap: 1.75rem;
     width: 100%;
 }
 
 @media (max-width: 768px) {
     .po_items_ho {
         grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
-        gap: 1rem;
+        gap: 1.25rem;
     }
 }
 
 @media (max-width: 576px) {
     .po_items_ho {
         grid-template-columns: 1fr;
-        gap: 0.7rem;
+        gap: 0.9rem;
     }
 }
 
