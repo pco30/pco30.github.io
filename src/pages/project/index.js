@@ -376,6 +376,7 @@ export const ProjectDetail = () => {
   const isSelfRefiningAgent = project.link === "/portfolio/self-refining-llm-agent";
   const isWinChangeMonitor = project.link === "/portfolio/winchangemonitor";
   const isHandOA = project.link === "/portfolio/hand-oa-severity-classification";
+  const isCAPM = project.link === "/portfolio/financial-modeling-capm";
 
   return (
     <HelmetProvider>
@@ -2445,6 +2446,201 @@ export const ProjectDetail = () => {
                       <li>JSON</li>
                       <li>CSV</li>
                       <li>Text Files</li>
+                    </ul>
+                  </div>
+                </div>
+              </Col>
+            </Row>
+          </>
+        ) : isCAPM ? (
+          <>
+            <Row className="sec_sp">
+              <Col lg="12">
+                <div className="project-image-container mb-4">
+                  <img
+                    src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=1200&h=675&fit=crop"
+                    alt="Financial market charts for CAPM modeling"
+                    className="project-image"
+                    style={{ maxWidth: '800px', width: '100%', height: 'auto', margin: '0 auto', display: 'block' }}
+                  />
+                </div>
+              </Col>
+            </Row>
+
+            <Row className="sec_sp">
+              <Col lg="12">
+                <h2 id="overview" className="section-title">Overview</h2>
+                <div className="project-description">
+                  <p>
+                    This project implements the <strong>Capital Asset Pricing Model (CAPM)</strong> in Python to quantify how individual
+                    equities relate to overall market risk and expected return. CAPM expresses a security’s expected return as the risk-free
+                    rate plus a risk premium scaled by the security’s beta relative to the market:
+                    <strong> r<sub>i</sub> = r<sub>f</sub> + β<sub>i</sub>(r<sub>m</sub> − r<sub>f</sub>)</strong>.
+                  </p>
+                  <p>
+                    Using historical stock prices and the S&P 500 as the market proxy, the notebook estimates betas via linear regression,
+                    applies the CAPM formula to compute expected returns, and visualizes stock-versus-market relationships for multiple
+                    tickers (including interactive Plotly scatter fits). Model agreement with historical behavior is within about
+                    <strong> ±1.5%</strong>, with correlation <strong>R &gt; 0.85</strong>.
+                  </p>
+                </div>
+              </Col>
+            </Row>
+
+            <Row className="sec_sp">
+              <Col lg="12">
+                <h2 id="problem" className="section-title">Problem/Challenge</h2>
+                <div className="project-description">
+                  <p>
+                    <strong>Investment Challenge:</strong> Investors need a transparent way to separate market-driven (systematic) risk from
+                    idiosyncratic noise and to estimate compensation required for holding a risky security versus a risk-free asset.
+                  </p>
+                  <p>
+                    <strong>Technical Challenges:</strong>
+                  </p>
+                  <ul className="project-list">
+                    <li>Cleaning multi-ticker price histories and aligning them with a market index</li>
+                    <li>Converting prices into comparable daily returns for regression</li>
+                    <li>Estimating beta robustly as the slope of stock returns versus market returns</li>
+                    <li>Interpreting beta (&lt; 1 defensive, = 1 market-like, &gt; 1 aggressive) and comparing CAPM expected returns to realized performance</li>
+                  </ul>
+                  <p>
+                    The goal was to build an end-to-end CAPM workflow—from raw prices to betas, expected returns, and visual diagnostics—that
+                    makes risk-return tradeoffs concrete for individual stocks and a full ticker universe.
+                  </p>
+                </div>
+              </Col>
+            </Row>
+
+            <Row className="sec_sp">
+              <Col lg="12">
+                <h2 id="pipeline" className="section-title">Model Pipeline</h2>
+
+                <div className="mermaid-container">
+                  <div className="mermaid" ref={mermaidCallbackRef}>
+                    {`graph TD
+    A["Import Stock Dataset<br/>(prices + S&P 500)"] --> B["EDA & Normalization"]
+    B --> C["Price Visualization"]
+    C --> D["Compute Daily Returns"]
+    D --> E["Estimate Beta<br/>(linear regression vs market)"]
+    E --> F["Apply CAPM Formula<br/>(expected return)"]
+    F --> G["Batch Betas for All Tickers"]
+    G --> H["Interactive Diagnostics<br/>(Plotly scatter + fit)"]
+
+    style A fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style B fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style C fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style D fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style E fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style F fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style G fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style H fill:#fff,stroke:#000,stroke-width:2px,color:#000`}
+                  </div>
+                </div>
+
+                <div className="pipeline-descriptions">
+                  <div className="pipeline-description-item">
+                    <h4>1. Data Import & EDA</h4>
+                    <p>Load a multi-ticker price history including the S&P 500 market proxy. Explore schema, coverage, and basic summary statistics to confirm the dataset is usable for return calculations.</p>
+                  </div>
+
+                  <div className="pipeline-description-item">
+                    <h4>2. Normalization & Visualization</h4>
+                    <p>Normalize price series for visual comparison across stocks and plot historical trajectories so scale differences do not obscure relative performance versus the market.</p>
+                  </div>
+
+                  <div className="pipeline-description-item">
+                    <h4>3. Daily Returns</h4>
+                    <p>Transform prices into daily percentage returns for each ticker and the S&P 500. Returns are the regression inputs required for beta estimation and CAPM expected-return calculations.</p>
+                  </div>
+
+                  <div className="pipeline-description-item">
+                    <h4>4. Beta Estimation</h4>
+                    <p>Fit a first-order polynomial (linear regression) between each stock’s daily returns and S&P 500 returns. The slope is beta (systematic risk); the intercept is alpha. Scatter plots overlay the fitted line for interpretability—for example, analyzing Tesla versus the market.</p>
+                  </div>
+
+                  <div className="pipeline-description-item">
+                    <h4>5. CAPM Expected Return</h4>
+                    <p>Apply r<sub>i</sub> = r<sub>f</sub> + β<sub>i</sub>(r<sub>m</sub> − r<sub>f</sub>) with an assumed risk-free rate (including the zero-rate baseline used in the notebook) and the estimated market excess return to obtain each security’s CAPM expected return.</p>
+                  </div>
+
+                  <div className="pipeline-description-item">
+                    <h4>6. Universe-wide Analysis</h4>
+                    <p>Loop across all tickers to compute betas/alphas, then generate interactive Plotly scatter plots with regression overlays to inspect outliers and unusual return days against market moves.</p>
+                  </div>
+                </div>
+              </Col>
+            </Row>
+
+            <Row className="sec_sp">
+              <Col lg="12">
+                <h2 id="results" className="section-title">Results</h2>
+                <div className="project-description">
+                  <div className="results-grid">
+                    <div className="result-card">
+                      <h4>Model Fit</h4>
+                      <p className="result-value">R &gt; 0.85</p>
+                      <p>Strong market correlation</p>
+                    </div>
+                    <div className="result-card">
+                      <h4>Return Deviation</h4>
+                      <p className="result-value">±1.5%</p>
+                      <p>vs historical performance</p>
+                    </div>
+                    <div className="result-card">
+                      <h4>Market Proxy</h4>
+                      <p className="result-value">S&P 500</p>
+                      <p>Benchmark for beta</p>
+                    </div>
+                    <div className="result-card">
+                      <h4>Risk Measure</h4>
+                      <p className="result-value">Beta / Alpha</p>
+                      <p>Per-ticker regression</p>
+                    </div>
+                  </div>
+                  <p>
+                    The CAPM notebook produces per-stock betas, CAPM expected returns, and diagnostic charts that make systematic risk
+                    visible against the S&P 500. Interactive Plotly views help spot unusual stock-vs-market days while summarizing risk
+                    posture across the full ticker set. Source repository: <a href="https://github.com/pco30/Capital-Asset-Pricing-Model" target="_blank" rel="noopener noreferrer">github.com/pco30/Capital-Asset-Pricing-Model</a>.
+                  </p>
+                </div>
+              </Col>
+            </Row>
+
+            <Row className="sec_sp">
+              <Col lg="12">
+                <h2 id="technologies" className="section-title">Technologies Used</h2>
+                <div className="technologies-grid">
+                  <div className="tech-category">
+                    <h4>Languages & Environment</h4>
+                    <ul className="tech-list">
+                      <li>Python</li>
+                      <li>Jupyter Notebook</li>
+                    </ul>
+                  </div>
+                  <div className="tech-category">
+                    <h4>Data & Numerics</h4>
+                    <ul className="tech-list">
+                      <li>pandas</li>
+                      <li>NumPy</li>
+                      <li>Linear Regression (polyfit)</li>
+                    </ul>
+                  </div>
+                  <div className="tech-category">
+                    <h4>Finance Concepts</h4>
+                    <ul className="tech-list">
+                      <li>CAPM</li>
+                      <li>Beta / Alpha</li>
+                      <li>Risk Premium</li>
+                      <li>S&P 500 Benchmarking</li>
+                    </ul>
+                  </div>
+                  <div className="tech-category">
+                    <h4>Visualization</h4>
+                    <ul className="tech-list">
+                      <li>Matplotlib</li>
+                      <li>Plotly Express</li>
+                      <li>Scatter + Regression Overlays</li>
                     </ul>
                   </div>
                 </div>

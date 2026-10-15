@@ -122,6 +122,12 @@ const dataportfolio = [    {
         link: "/portfolio/winchangemonitor",
     },
     {
+        name: "Financial Modeling with CAPM",
+        img: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=400&h=400&fit=crop",
+        description: "Financial Modeling with CAPM - Implemented the Capital Asset Pricing Model in Python to estimate stock betas versus the S&P 500 and evaluate expected risk-return relationships, achieving ±1.5% deviation from historical performance with R > 0.85.",
+        link: "/portfolio/financial-modeling-capm",
+    },
+    {
         name: "Predictive Modelling of Battery Degradation",
         img: require("./assets/images/batter.jpg"),
         description: "Predictive Modelling of Battery Degradation - Developed a data-driven SoH estimation framework for lithium-ion batteries using deep learning sequence models and tree-based ensemble regressors, achieving RMSE of 0.295.",
@@ -166,11 +172,6 @@ const dataportfolio = [    {
 ];
 
 const otherProjects = [
-    {
-        name: "Financial Modeling with CAPM",
-        description: "Developed CAPM implementation using Python to evaluate risk-return relationships, achieving ±1.5% deviation from historical performance with R > 0.85.",
-        link: "https://github.com/pco30/Capital-Asset-Pricing-Model",
-    },
     {
         name: "Trajectory Modelling",
         description: "Designed MATLAB code for trajectory optimization of 25,000 kg space shuttle projectile using shooting method and Runge-Kutta 4, reducing errors by 5% with 3D Earth rotation model.",
