@@ -440,7 +440,7 @@ export const ProjectDetail = () => {
       </Link>
       
       {/* Navigation Sidebar */}
-      <nav className="project-nav-sidebar">
+      <div className="project-nav-stack">
         {githubInfo && (
           <a
             href={githubInfo.url}
@@ -455,20 +455,22 @@ export const ProjectDetail = () => {
             </span>
           </a>
         )}
-        <h3 className="project-nav-header">Contents</h3>
-        <ul className="project-nav-list">
-          {sections.map((section) => (
-            <li key={section.id}>
-              <button 
-                onClick={() => scrollToSection(section.id)}
-                className="project-nav-link"
-              >
-                {section.label}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </nav>
+        <nav className="project-nav-sidebar">
+          <h3 className="project-nav-header">Contents</h3>
+          <ul className="project-nav-list">
+            {sections.map((section) => (
+              <li key={section.id}>
+                <button 
+                  onClick={() => scrollToSection(section.id)}
+                  className="project-nav-link"
+                >
+                  {section.label}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
       
       <Container className="About-header">
         <Row className="mb-5 mt-3 pt-md-3">
