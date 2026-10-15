@@ -98,6 +98,12 @@ const services = [{
 ];
 
 const dataportfolio = [    {
+        name: "Hand OA Severity Classification",
+        img: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?w=400&h=400&fit=crop",
+        description: "Hand OA Severity Classification - Built a reproducible patient-level data and manifest pipeline for hand osteoarthritis severity grading from finger-joint X-ray ROIs, supporting KL and multitask (KL+JSN+OP) computer vision experiments.",
+        link: "/portfolio/hand-oa-severity-classification",
+    },
+    {
         name: "NeRF-based 3D Avatar",
         img: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400&h=400&fit=crop",
         description: "NeRF-based 3D Avatar - Built an end-to-end Nerfstudio pipeline that reconstructs a personal 3D avatar from multi-view images and exports a Blender-ready mesh via Poisson surface reconstruction.",

@@ -375,6 +375,7 @@ export const ProjectDetail = () => {
   const isSelfAvatarNerf = project.link === "/portfolio/nerf-based-3d-avatar";
   const isSelfRefiningAgent = project.link === "/portfolio/self-refining-llm-agent";
   const isWinChangeMonitor = project.link === "/portfolio/winchangemonitor";
+  const isHandOA = project.link === "/portfolio/hand-oa-severity-classification";
 
   return (
     <HelmetProvider>
@@ -2444,6 +2445,196 @@ export const ProjectDetail = () => {
                       <li>JSON</li>
                       <li>CSV</li>
                       <li>Text Files</li>
+                    </ul>
+                  </div>
+                </div>
+              </Col>
+            </Row>
+          </>
+        ) : isHandOA ? (
+          <>
+            <Row className="sec_sp">
+              <Col lg="12">
+                <h2 id="overview" className="section-title">Overview</h2>
+                <div className="project-description">
+                  <p>
+                    This project is part of <strong>BU MET CS 790 — Computer Vision in AI</strong> and focuses on
+                    <strong> hand osteoarthritis (HOA) severity classification</strong> from finger-joint X-ray region-of-interest (ROI) images.
+                    The work builds a reproducible data foundation for Project Track 2: cleaning clinical labels, analyzing class imbalance,
+                    and freezing patient-level train/validation/test manifests for downstream deep learning.
+                  </p>
+                  <p>
+                    The pipeline targets visit <strong>V00</strong> and <strong>12 ROI joints</strong> (DIP2–5, PIP2–5, MCP2–5), with labels for
+                    Kellgren–Lawrence grade (<strong>KL</strong>) plus secondary radiographic scores such as joint-space narrowing (<strong>JSN</strong>)
+                    and osteophytes (<strong>OP</strong>). Outputs support both image-only KL baselines and multitask KL+JSN+OP experiments on a
+                    shared, leakage-safe patient split.
+                  </p>
+                </div>
+              </Col>
+            </Row>
+
+            <Row className="sec_sp">
+              <Col lg="12">
+                <h2 id="problem" className="section-title">Problem/Challenge</h2>
+                <div className="project-description">
+                  <p>
+                    <strong>Clinical Challenge:</strong> Hand osteoarthritis severity is graded from radiographs using ordinal scales such as
+                    Kellgren–Lawrence. Manual grading is time-consuming and subject to variability, so computer vision models that can classify
+                    joint-level severity from ROI images are clinically valuable.
+                  </p>
+                  <p>
+                    <strong>Technical Challenges:</strong>
+                  </p>
+                  <ul className="project-list">
+                    <li>Severe KL class imbalance that directly affects model strategy and evaluation</li>
+                    <li>Preventing patient leakage by splitting at the patient/group level rather than by individual joint images</li>
+                    <li>Aligning clinical CSV labels with available ROI image files across 12 joints</li>
+                    <li>Producing frozen, versioned manifests suitable for SCC training and fair baseline vs multitask comparisons</li>
+                  </ul>
+                  <p>
+                    The goal was to establish a validated, reproducible dataset package before model training: statistical EDA, patient-stratified
+                    splits, and trainable manifests for KL-only and multitask learning.
+                  </p>
+                </div>
+              </Col>
+            </Row>
+
+            <Row className="sec_sp">
+              <Col lg="12">
+                <h2 id="pipeline" className="section-title">Model Pipeline</h2>
+
+                <div className="mermaid-container">
+                  <div className="mermaid" ref={mermaidCallbackRef}>
+                    {`graph TD
+    A["Clinical CSV<br/>(hand.csv)"] --> B["Schema Checks<br/>+ Deduplication"]
+    C["ROI Image Corpus<br/>(dir or file list)"] --> D["Parse Joint Filenames<br/>(12 ROIs)"]
+    B --> E["Statistical EDA<br/>(KL / JSN / OP)"]
+    B --> F["Patient-Level Split<br/>(70/15/15, seed 42)"]
+    D --> F
+    E --> F
+    F --> G["All-row Manifest"]
+    F --> H["KL-trainable Manifest"]
+    F --> I["Multitask Manifest<br/>(KL+JSN+OP)"]
+    G --> J["Validation<br/>(no patient overlap)"]
+    H --> J
+    I --> J
+    J --> K["Downstream CV Training<br/>(SCC)"]
+
+    style A fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style B fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style C fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style D fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style E fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style F fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style G fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style H fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style I fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style J fill:#fff,stroke:#000,stroke-width:2px,color:#000
+    style K fill:#fff,stroke:#000,stroke-width:2px,color:#000`}
+                  </div>
+                </div>
+
+                <div className="pipeline-descriptions">
+                  <div className="pipeline-description-item">
+                    <h4>1. Clinical Data + Image Alignment</h4>
+                    <p>Load `hand.csv` with V00 joint scores (KL, JSN, OP, and related fields), verify required columns, and reconcile patient `id` with image folder metadata. Deduplicate exact duplicate patient rows while rejecting conflicting duplicates. Collect ROI images from a directory or filename list and parse joint names (DIP/PIP/MCP 2–5).</p>
+                  </div>
+
+                  <div className="pipeline-description-item">
+                    <h4>2. Statistical Analysis</h4>
+                    <p>Week-1 notebooks quantify KL class imbalance, secondary score distributions (JSN/OP/ER), per-joint patterns, and correlations among radiographic scores. These findings guide modeling choices such as class weighting, ordinal losses, and multitask targets.</p>
+                  </div>
+
+                  <div className="pipeline-description-item">
+                    <h4>3. Patient-Level Stratified Split</h4>
+                    <p>Freeze a single source-of-truth patient split using `duryeaid` grouping, 70/15/15 ratios, seed 42, and stratification by each patient’s max available V00 KL among image-present joints. This prevents the same patient from appearing across train/val/test.</p>
+                  </div>
+
+                  <div className="pipeline-description-item">
+                    <h4>4. Manifest Package</h4>
+                    <p>Emit versioned artifacts: patient split CSV, all-row joint manifest (including missing images for QA), KL-trainable rows (image + KL present), and multitask-trainable rows (image + KL + JSN + OP). A validator checks split integrity and reports patient counts with zero overlap.</p>
+                  </div>
+
+                  <div className="pipeline-description-item">
+                    <h4>5. SCC-Ready Training Path</h4>
+                    <p>Shell examples run the builder/validator on BU’s Shared Computing Cluster with the course conda environment, writing manifests under a shared project space for subsequent computer-vision model training.</p>
+                  </div>
+                </div>
+              </Col>
+            </Row>
+
+            <Row className="sec_sp">
+              <Col lg="12">
+                <h2 id="results" className="section-title">Results</h2>
+                <div className="project-description">
+                  <div className="results-grid">
+                    <div className="result-card">
+                      <h4>ROI Joints</h4>
+                      <p className="result-value">12</p>
+                      <p>DIP / PIP / MCP 2–5</p>
+                    </div>
+                    <div className="result-card">
+                      <h4>Split Protocol</h4>
+                      <p className="result-value">70/15/15</p>
+                      <p>Patient-level, seed 42</p>
+                    </div>
+                    <div className="result-card">
+                      <h4>Label Tracks</h4>
+                      <p className="result-value">KL + MT</p>
+                      <p>KL-only and KL+JSN+OP</p>
+                    </div>
+                    <div className="result-card">
+                      <h4>Visit Scope</h4>
+                      <p className="result-value">V00</p>
+                      <p>Frozen baseline cohort</p>
+                    </div>
+                  </div>
+                  <p>
+                    The repository delivers cleaned joint-level datasets, exploratory analysis notebooks, and a validated manifest builder that
+                    freezes leakage-safe splits for HOA severity modeling. Team collaboration includes statistical analysis leadership and
+                    SCC-oriented packaging for shared training. Source repository: <a href="https://github.com/nr8283/CS790-Term-Project-2026" target="_blank" rel="noopener noreferrer">github.com/nr8283/CS790-Term-Project-2026</a>.
+                  </p>
+                </div>
+              </Col>
+            </Row>
+
+            <Row className="sec_sp">
+              <Col lg="12">
+                <h2 id="technologies" className="section-title">Technologies Used</h2>
+                <div className="technologies-grid">
+                  <div className="tech-category">
+                    <h4>Data & Stats</h4>
+                    <ul className="tech-list">
+                      <li>Python</li>
+                      <li>pandas / NumPy</li>
+                      <li>scikit-learn splits</li>
+                      <li>Jupyter Notebooks</li>
+                    </ul>
+                  </div>
+                  <div className="tech-category">
+                    <h4>Medical Imaging Labels</h4>
+                    <ul className="tech-list">
+                      <li>Kellgren–Lawrence (KL)</li>
+                      <li>Joint Space Narrowing (JSN)</li>
+                      <li>Osteophytes (OP)</li>
+                      <li>Hand X-ray ROIs</li>
+                    </ul>
+                  </div>
+                  <div className="tech-category">
+                    <h4>ML Ops / Reproducibility</h4>
+                    <ul className="tech-list">
+                      <li>Frozen Manifest CSVs</li>
+                      <li>Patient-level Stratification</li>
+                      <li>Manifest Validation CLI</li>
+                      <li>Versioned Split Seeds</li>
+                    </ul>
+                  </div>
+                  <div className="tech-category">
+                    <h4>Compute</h4>
+                    <ul className="tech-list">
+                      <li>BU SCC</li>
+                      <li>Conda / PyTorch course env</li>
+                      <li>Bash orchestration</li>
                     </ul>
                   </div>
                 </div>
