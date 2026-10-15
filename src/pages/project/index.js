@@ -2454,14 +2454,6 @@ export const ProjectDetail = () => {
           <>
             <Row className="sec_sp">
               <Col lg="12">
-                <div className="project-image-container mb-4">
-                  <img src={project.img} alt="NeRF-based 3D Avatar" className="project-image" style={{ maxWidth: '800px', width: '100%', height: 'auto', margin: '0 auto', display: 'block' }} />
-                </div>
-              </Col>
-            </Row>
-
-            <Row className="sec_sp">
-              <Col lg="12">
                 <h2 id="overview" className="section-title">Overview</h2>
                 <div className="project-description">
                   <p>
@@ -2647,14 +2639,6 @@ export const ProjectDetail = () => {
           <>
             <Row className="sec_sp">
               <Col lg="12">
-                <div className="project-image-container mb-4">
-                  <img src={project.img} alt="Self-refining LLM Agent" className="project-image" style={{ maxWidth: '800px', width: '100%', height: 'auto', margin: '0 auto', display: 'block' }} />
-                </div>
-              </Col>
-            </Row>
-
-            <Row className="sec_sp">
-              <Col lg="12">
                 <h2 id="overview" className="section-title">Overview</h2>
                 <div className="project-description">
                   <p>
@@ -2834,14 +2818,6 @@ export const ProjectDetail = () => {
           </>
         ) : isWinChangeMonitor ? (
           <>
-            <Row className="sec_sp">
-              <Col lg="12">
-                <div className="project-image-container mb-4">
-                  <img src={project.img} alt="WinChangeMonitor" className="project-image" style={{ maxWidth: '800px', width: '100%', height: 'auto', margin: '0 auto', display: 'block' }} />
-                </div>
-              </Col>
-            </Row>
-
             <Row className="sec_sp">
               <Col lg="12">
                 <h2 id="overview" className="section-title">Overview</h2>
