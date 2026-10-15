@@ -3,6 +3,7 @@ import "./style.css";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { Container, Row, Col } from "react-bootstrap";
 import { useParams, Link } from "react-router-dom";
+import { FaGithub } from "react-icons/fa";
 import { dataportfolio, meta } from "../../content_option";
 import ERImage from "../../assets/images/ER.jpeg";
 import SentimentImage from "../../assets/images/sentiment.png";
@@ -11,6 +12,53 @@ import DiabeticRetinopathyImage from "../../assets/images/diabetic-retinopathy-s
 import BooksImage from "../../assets/images/books.jpg";
 import SOHImage from "../../assets/images/soh.png";
 import EarlyLifeImage from "../../assets/images/early-life.png";
+
+const PROJECT_GITHUB = {
+  "/portfolio/hand-oa-severity-classification": {
+    url: "https://github.com/nr8283/CS790-Term-Project-2026",
+    private: true,
+  },
+  "/portfolio/nerf-based-3d-avatar": {
+    url: "https://github.com/pco30/3D-avatar",
+    private: false,
+  },
+  "/portfolio/self-refining-llm-agent": {
+    url: "https://github.com/pco30/Self-refining_LLM_Agent",
+    private: false,
+  },
+  "/portfolio/winchangemonitor": {
+    url: "https://github.com/pco30/WinChangeMonitor",
+    private: false,
+  },
+  "/portfolio/financial-modeling-capm": {
+    url: "https://github.com/pco30/Capital-Asset-Pricing-Model",
+    private: false,
+  },
+  "/portfolio/predictive-modelling-battery-degradation": {
+    url: "https://github.com/pco30/SOH-and-RUL-predicition",
+    private: false,
+  },
+  "/portfolio/neural-sequential-recommender-book-discovery": {
+    url: "https://github.com/pco30/Neural-Sequential-Recommender",
+    private: false,
+  },
+  "/portfolio/diabetic-retinopathy-detection": {
+    url: "https://github.com/pco30/Diabetic-retinopathy-detection",
+    private: false,
+  },
+  "/portfolio/two-layered-portfolio-optimization": {
+    url: "https://github.com/pco30/Portfolio-Optimization",
+    private: false,
+  },
+  "/portfolio/sentiment-analysis-nlp": {
+    url: "https://github.com/pco30/Natural-Language-Processing",
+    private: false,
+  },
+  "/portfolio/hospital-er-simulation": {
+    url: "https://github.com/pco30/DataStructure-Projects/tree/main/Hospital_ER_Simulation",
+    private: false,
+  },
+};
 
 export const ProjectDetail = () => {
   const { projectId } = useParams();
@@ -68,6 +116,7 @@ export const ProjectDetail = () => {
   const project = dataportfolio.find(
     (p) => p.link === `/portfolio/${projectId}`
   );
+  const githubInfo = project ? PROJECT_GITHUB[project.link] : null;
 
   // Initialize Mermaid for pipeline diagram
   useEffect(() => {
@@ -392,6 +441,20 @@ export const ProjectDetail = () => {
       
       {/* Navigation Sidebar */}
       <nav className="project-nav-sidebar">
+        {githubInfo && (
+          <a
+            href={githubInfo.url}
+            className="project-github-link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaGithub className="project-github-icon" aria-hidden="true" />
+            <span>
+              Github
+              {githubInfo.private ? " (private)" : ""}
+            </span>
+          </a>
+        )}
         <h3 className="project-nav-header">Contents</h3>
         <ul className="project-nav-list">
           {sections.map((section) => (

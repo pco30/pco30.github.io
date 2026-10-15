@@ -275,6 +275,35 @@
     max-width: 200px;
 }
 
+.project-github-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--text-color);
+    text-decoration: none;
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 0 0 14px 0;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--secondary-color);
+    transition: opacity 0.2s ease;
+}
+
+.project-github-link:hover {
+    color: var(--text-color);
+    text-decoration: none;
+    opacity: 0.8;
+}
+
+.project-github-icon {
+    width: 1.15em;
+    height: 1.15em;
+    flex-shrink: 0;
+    fill: var(--text-color);
+}
+
 .project-nav-header {
     font-family: Marcellus;
     font-size: 1.2rem;
