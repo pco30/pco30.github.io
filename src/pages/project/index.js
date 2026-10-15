@@ -2651,19 +2651,6 @@ export const ProjectDetail = () => {
           <>
             <Row className="sec_sp">
               <Col lg="12">
-                <div className="project-image-container mb-4">
-                  <img
-                    src="https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?w=1200&h=675&fit=crop"
-                    alt="Hand X-ray for osteoarthritis severity classification"
-                    className="project-image"
-                    style={{ maxWidth: '800px', width: '100%', height: 'auto', margin: '0 auto', display: 'block' }}
-                  />
-                </div>
-              </Col>
-            </Row>
-
-            <Row className="sec_sp">
-              <Col lg="12">
                 <h2 id="overview" className="section-title">Overview</h2>
                 <div className="project-description">
                   <p>
