@@ -98,14 +98,14 @@ const services = [{
 ];
 
 const dataportfolio = [    {
-        name: "Self Avatar using NeRF",
+        name: "NeRF-based 3D Avatar",
         img: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400&h=400&fit=crop",
-        description: "Self Avatar using NeRF - Built an end-to-end Nerfstudio pipeline that reconstructs a personal 3D avatar from multi-view images and exports a Blender-ready mesh via Poisson surface reconstruction.",
-        link: "/portfolio/self-avatar-using-nerf",
+        description: "NeRF-based 3D Avatar - Built an end-to-end Nerfstudio pipeline that reconstructs a personal 3D avatar from multi-view images and exports a Blender-ready mesh via Poisson surface reconstruction.",
+        link: "/portfolio/nerf-based-3d-avatar",
     },
     {
         name: "Self-refining LLM Agent",
-        img: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=400&fit=crop",
+        img: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=400&h=400&fit=crop",
         description: "Self-refining LLM Agent - Built a local LangGraph + Ollama research agent that plans web searches, cites sources, and iteratively critiques and revises answers until quality thresholds are met.",
         link: "/portfolio/self-refining-llm-agent",
     },

@@ -372,7 +372,7 @@ export const ProjectDetail = () => {
   const isBookRecommender = project.link === "/portfolio/neural-sequential-recommender-book-discovery";
   const isBatteryDegradation = project.link === "/portfolio/predictive-modelling-battery-degradation";
   const isTextProcessing = project.link === "/portfolio/large-scale-text-processing-classification";
-  const isSelfAvatarNerf = project.link === "/portfolio/self-avatar-using-nerf";
+  const isSelfAvatarNerf = project.link === "/portfolio/nerf-based-3d-avatar";
   const isSelfRefiningAgent = project.link === "/portfolio/self-refining-llm-agent";
   const isWinChangeMonitor = project.link === "/portfolio/winchangemonitor";
 
@@ -2455,7 +2455,7 @@ export const ProjectDetail = () => {
             <Row className="sec_sp">
               <Col lg="12">
                 <div className="project-image-container mb-4">
-                  <img src={project.img} alt="Self Avatar using NeRF" className="project-image" style={{ maxWidth: '800px', width: '100%', height: 'auto', margin: '0 auto', display: 'block' }} />
+                  <img src={project.img} alt="NeRF-based 3D Avatar" className="project-image" style={{ maxWidth: '800px', width: '100%', height: 'auto', margin: '0 auto', display: 'block' }} />
                 </div>
               </Col>
             </Row>
