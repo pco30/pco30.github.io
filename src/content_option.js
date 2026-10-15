@@ -99,7 +99,7 @@ const services = [{
 
 const dataportfolio = [    {
         name: "Hand OA Severity Classification",
-        img: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?w=400&h=400&fit=crop",
+        img: "https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?w=1200&h=675&fit=crop",
         description: "Hand OA Severity Classification - Built a reproducible patient-level data and manifest pipeline for hand osteoarthritis severity grading from finger-joint X-ray ROIs, supporting KL and multitask (KL+JSN+OP) computer vision experiments.",
         link: "/portfolio/hand-oa-severity-classification",
     },
