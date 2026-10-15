@@ -110,17 +110,13 @@ const services = [{
     },
 ];
 
-const dataportfolio = [    {
-        name: "Hand OA Severity Classification",
-        img: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?w=400&h=400&fit=crop",
-        description: "Hand OA Severity Classification - Built a reproducible patient-level data and manifest pipeline for hand osteoarthritis severity grading from finger-joint X-ray ROIs, supporting KL and multitask (KL+JSN+OP) computer vision experiments.",
-        link: "/portfolio/hand-oa-severity-classification",
-    },
+const dataportfolio = [
+    // Row 1 — strongest ML / research / quantitative signal
     {
-        name: "NeRF-based 3D Avatar",
-        img: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400&h=400&fit=crop",
-        description: "NeRF-based 3D Avatar - Built an end-to-end Nerfstudio pipeline that reconstructs a personal 3D avatar from multi-view images and exports a Blender-ready mesh via Poisson surface reconstruction.",
-        link: "/portfolio/nerf-based-3d-avatar",
+        name: "Predictive Modelling of Battery Degradation",
+        img: require("./assets/images/batter.jpg"),
+        description: "Predictive Modelling of Battery Degradation - Developed a data-driven SoH estimation framework for lithium-ion batteries using deep learning sequence models and tree-based ensemble regressors, achieving RMSE of 0.295.",
+        link: "/portfolio/predictive-modelling-battery-degradation",
     },
     {
         name: "Self-refining LLM Agent",
@@ -129,34 +125,23 @@ const dataportfolio = [    {
         link: "/portfolio/self-refining-llm-agent",
     },
     {
-        name: "WinChangeMonitor",
-        img: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=400&h=400&fit=crop",
-        description: "WinChangeMonitor - Designed a Windows desktop tool that baselines filesystem, registry, and services, then diffs post-execution changes into HTML/JSON reports for analyzing third-party software.",
-        link: "/portfolio/winchangemonitor",
+        name: "Hand OA Severity Classification",
+        img: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?w=400&h=400&fit=crop",
+        description: "Hand OA Severity Classification - Built a reproducible patient-level data and manifest pipeline for hand osteoarthritis severity grading from finger-joint X-ray ROIs, supporting KL and multitask (KL+JSN+OP) computer vision experiments.",
+        link: "/portfolio/hand-oa-severity-classification",
     },
     {
-        name: "Financial Modeling with CAPM",
-        img: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=400&h=400&fit=crop",
-        description: "Financial Modeling with CAPM - Implemented the Capital Asset Pricing Model in Python to estimate stock betas versus the S&P 500 and evaluate expected risk-return relationships, achieving ±1.5% deviation from historical performance with R > 0.85.",
-        link: "/portfolio/financial-modeling-capm",
+        name: "Two-Layered Portfolio Optimization",
+        img: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400&h=400&fit=crop",
+        description: "Two-Layered Portfolio Optimization - Classified 500+ S&P 500 stocks and optimized weights using convex optimization, achieving +28.75% total return in 2024, outperforming S&P 500 by +3.75%.",
+        link: "/portfolio/two-layered-portfolio-optimization",
     },
-    {
-        name: "Predictive Modelling of Battery Degradation",
-        img: require("./assets/images/batter.jpg"),
-        description: "Predictive Modelling of Battery Degradation - Developed a data-driven SoH estimation framework for lithium-ion batteries using deep learning sequence models and tree-based ensemble regressors, achieving RMSE of 0.295.",
-        link: "/portfolio/predictive-modelling-battery-degradation",
-    },
+    // Row 2 — deep learning / large-scale systems
     {
         name: "Neural Sequential Recommender for Book Discovery",
         img: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=400&fit=crop",
         description: "Neural Sequential Recommender for Book Discovery - Built a large-scale recommendation system on Goodreads dataset (876K users, 2.3M books) using SASRec and Word2Vec embeddings for personalized book suggestions.",
         link: "/portfolio/neural-sequential-recommender-book-discovery",
-    },
-    {
-        name: "Large Scale Text Processing and Classification",
-        img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&h=400&fit=crop",
-        description: "Large Scale Text Processing and Classification - Developed a text retrieval pipeline over 1M+ Wikipedia documents using PySpark, achieving 3x improvement in processing efficiency with sub-second inference time.",
-        link: "/portfolio/large-scale-text-processing-classification",
     },
     {
         name: "Diabetic Retinopathy Detection",
@@ -165,10 +150,29 @@ const dataportfolio = [    {
         link: "/portfolio/diabetic-retinopathy-detection",
     },
     {
-        name: "Two-Layered Portfolio Optimization",
-        img: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400&h=400&fit=crop",
-        description: "Two-Layered Portfolio Optimization - Classified 500+ S&P 500 stocks and optimized weights using convex optimization, achieving +28.75% total return in 2024, outperforming S&P 500 by +3.75%.",
-        link: "/portfolio/two-layered-portfolio-optimization",
+        name: "Large Scale Text Processing and Classification",
+        img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&h=400&fit=crop",
+        description: "Large Scale Text Processing and Classification - Developed a text retrieval pipeline over 1M+ Wikipedia documents using PySpark, achieving 3x improvement in processing efficiency with sub-second inference time.",
+        link: "/portfolio/large-scale-text-processing-classification",
+    },
+    {
+        name: "NeRF-based 3D Avatar",
+        img: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400&h=400&fit=crop",
+        description: "NeRF-based 3D Avatar - Built an end-to-end Nerfstudio pipeline that reconstructs a personal 3D avatar from multi-view images and exports a Blender-ready mesh via Poisson surface reconstruction.",
+        link: "/portfolio/nerf-based-3d-avatar",
+    },
+    // Row 3 — applied modeling / systems / foundational projects
+    {
+        name: "Financial Modeling with CAPM",
+        img: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=400&h=400&fit=crop",
+        description: "Financial Modeling with CAPM - Implemented the Capital Asset Pricing Model in Python to estimate stock betas versus the S&P 500 and evaluate expected risk-return relationships, achieving ±1.5% deviation from historical performance with R > 0.85.",
+        link: "/portfolio/financial-modeling-capm",
+    },
+    {
+        name: "WinChangeMonitor",
+        img: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=400&h=400&fit=crop",
+        description: "WinChangeMonitor - Designed a Windows desktop tool that baselines filesystem, registry, and services, then diffs post-execution changes into HTML/JSON reports for analyzing third-party software.",
+        link: "/portfolio/winchangemonitor",
     },
     {
         name: "Sentiment Analysis Using NLP",
