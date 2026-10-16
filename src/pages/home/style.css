@@ -121,16 +121,17 @@ section {
 
 @media (max-width:991.98px) {
     .intro_sec .h_bg-image {
-        width: 384px;
-        height: 384px;
-        margin: 0 auto;
+        width: min(384px, 78vw);
+        height: min(384px, 78vw);
+        margin: 0 auto 24px;
+        background-position: 50% 35%;
     }
 }
 
 @media (max-width:575.98px) {
     .intro_sec .h_bg-image {
-        width: 300px;
-        height: 300px;
+        width: min(300px, 78vw);
+        height: min(300px, 78vw);
     }
 }
 
@@ -233,11 +234,6 @@ section {
 }
 
 @media (max-width:991.98px) {
-    .intro_sec .h_bg-image {
-        height: 600px;
-        min-height: 75vh;
-        margin-bottom: 30px;
-    }
     .intro_sec .h_bg-image .block {
         top: unset;
         bottom: 0;
