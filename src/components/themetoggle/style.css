@@ -13,3 +13,16 @@
     width: 2em;
     height: 2em;
 }
+
+.theme_toggle_btn {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme_toggle_btn svg {
+    width: 1.35em;
+    height: 1.35em;
+    pointer-events: none;
+}

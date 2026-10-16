@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { WiMoonAltWaningCrescent4 } from "react-icons/wi";
+import "./style.css";
 
 
 const Themetoggle = () => {
@@ -12,9 +13,14 @@ const Themetoggle = () => {
     localStorage.setItem('theme', theme ); 
   }, [theme]);
   return (
-    <div className="nav_ac" onClick={themetoggle}>
+    <button
+      type="button"
+      className="nav_ac theme_toggle_btn"
+      onClick={themetoggle}
+      aria-label="Toggle light and dark theme"
+    >
       <WiMoonAltWaningCrescent4 />
-    </div>
+    </button>
   );
 };
 

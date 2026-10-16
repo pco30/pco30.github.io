@@ -82,7 +82,7 @@ body {
 a, button, input[type="button"], input[type="submit"], input[type="reset"], 
 input[type="text"], input[type="email"], input[type="number"], 
 select, textarea, label[for], .link, .project-nav-link, 
-.contact-me-footer, .back-to-portfolio-sticky {
+.contact-me-footer, .back-to-portfolio-sticky, .theme_toggle_btn {
     cursor: pointer;
 }
 
