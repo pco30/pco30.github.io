@@ -1,7 +1,7 @@
 const logotext = "PRINCELY";
 const meta = {
     title: "Princely Oseji",
-    description: "I’m Princely Oseji, a Data Scientist and Machine Learning Engineer currently pursuing MSc. Computer Science at Boston University. Specializing in predictive modeling, time series forecasting, and scalable ML systems.",
+    description: "I’m Princely Oseji, a Software Engineer, Data Scientist, and Machine Learning Engineer currently pursuing MSc. Computer Science at Boston University. I build production software alongside predictive models, data systems, and scalable ML applications.",
 };
 
 const introdata = {
@@ -9,15 +9,15 @@ const introdata = {
     animated: {
         first: "I build ML models",
         second: "I analyze data at scale",
-        third: "I solve complex problems",
+        third: "I build software",
     },
-    description: "Data Scientist and ML Engineer passionate about transforming data into actionable insights. Currently pursuing MSc. Computer Science at Boston University with expertise in predictive modeling, time series forecasting, and scalable machine learning systems.",
+    description: "Software Engineer, Data Scientist, and ML Engineer passionate about shipping reliable systems and turning data into actionable insights. Currently pursuing MSc. Computer Science at Boston University, with experience across full-stack tooling, backend services, predictive modeling, and scalable machine learning.",
     your_img_url: require("./assets/images/home-portrait.jpg"),
 };
 
 const dataabout = {
     title: "About myself",
-    aboutme: "I'm a Data Scientist and Machine Learning Engineer with a strong foundation in both engineering and computer science. Currently pursuing my MSc. in Computer Science at Boston University, I bring a unique perspective combining mechanical engineering principles with advanced data science techniques. My experience spans from optimizing transformer-based forecasting models at Schneider Electric to conducting cutting-edge research in human-machine interaction at BU's Human-2-Everything Lab. I'm passionate about building scalable ML systems, conducting rigorous data analysis, and translating complex technical insights into business value. With expertise in Python, PySpark, TensorFlow, and cloud platforms, I thrive on solving challenging problems at the intersection of data, machine learning, and real-world applications.",
+    aboutme: "I'm a Software Engineer, Data Scientist, and Machine Learning Engineer with a strong foundation in engineering and computer science. Currently pursuing my MSc. in Computer Science at Boston University, I build end-to-end software—from APIs and desktop tools to data pipelines and ML systems—while applying rigorous analysis to real-world problems. My experience spans optimizing transformer-based forecasting models at Schneider Electric, conducting research in human-machine interaction at BU's Human-2-Everything Lab, and shipping production-minded applications such as system monitoring tools and agentic workflows. I'm passionate about writing clean, maintainable code, building scalable systems, and translating complex technical work into clear business value at the intersection of software, data, and machine learning.",
 };
 const worktimeline = [{
         jobtitle: "Research Scientist",
@@ -110,16 +110,20 @@ const skillsCategories = [
 ];
 
 const services = [{
+        title: "Software Engineering",
+        description: "Designing and building reliable applications, APIs, and tooling with strong attention to architecture, testing, and maintainability. Experience delivering desktop and backend systems, developer workflows, and production-ready software across the stack.",
+    },
+    {
         title: "Data Science & Analytics",
         description: "Expertise in building scalable ETL pipelines, conducting exploratory data analysis, and transforming millions of records into actionable business insights. Experience with PySpark, Databricks, and cloud platforms.",
     },
     {
         title: "Machine Learning Engineering",
-        description: "Specialized in developing and optimizing ML models including transformer-based time series forecasting, deep learning for computer vision, and sequential recommendation systems. Proficient in TensorFlow and model deployment.",
+        description: "Specialized in developing and optimizing ML models including transformer-based time series forecasting, deep learning for computer vision, and sequential recommendation systems. Proficient in TensorFlow, PyTorch, and model deployment.",
     },
     {
         title: "Research & Development",
-        description: "Conducting cutting-edge research in human-machine interaction, developing simulation environments for ML model testing, and contributing to academic publications in data-driven estimation and predictive modeling.",
+        description: "Conducting research in human-machine interaction, developing simulation environments for ML model testing, and contributing to academic work in data-driven estimation and predictive modeling.",
     },
 ];
 
