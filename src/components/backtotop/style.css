@@ -1,0 +1,64 @@
+.back-to-top {
+    position: fixed;
+    right: 22px;
+    bottom: 22px;
+    z-index: 200;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    border: 2px solid var(--secondary-color);
+    background: var(--bg-color);
+    color: var(--text-color);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(12px);
+    transition: opacity 0.25s ease, transform 0.25s ease, background 0.2s ease;
+    padding: 8px;
+}
+
+.back-to-top.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.back-to-top:hover {
+    background: var(--secondary-color);
+    color: var(--bg-color);
+}
+
+.back-to-top-icon {
+    width: 1.15em;
+    height: 1.15em;
+    stroke-width: 2.5;
+}
+
+.back-to-top-label {
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.58rem;
+    font-weight: 600;
+    line-height: 1.1;
+    text-align: center;
+    letter-spacing: 0.01em;
+    text-transform: lowercase;
+}
+
+@media (max-width: 576px) {
+    .back-to-top {
+        right: 14px;
+        bottom: 14px;
+        width: 64px;
+        height: 64px;
+    }
+
+    .back-to-top-label {
+        font-size: 0.52rem;
+    }
+}

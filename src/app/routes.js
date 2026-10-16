@@ -7,6 +7,7 @@ import { ContactUs } from "../pages/contact";
 import { About } from "../pages/about";
 import { ProjectDetail } from "../pages/project";
 import { Socialicons } from "../components/socialicons";
+import { BackToTop } from "../components/backtotop";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 const AnimatedRoutes = withRouter(({ location }) => (
@@ -37,6 +38,7 @@ function AppRoutes() {
     <div className="s_c">
       <AnimatedRoutes />
       <Socialicons />
+      <BackToTop />
     </div>
   );
 }
